@@ -34,14 +34,13 @@ jobs:
           java-version: '17'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2.0.2
-      - name: Setup gradle.properties
-        uses: SimonMarquis/ci-gradle-properties-action@v1
-        with:
-           path: .github/gradle.properties
-      - name: Setup build.gradle
-        uses: thecodemonkey/action-get-gradle-version@v1.0
-        with:
-          file: .github/build.gradle
+      - name: Workaround build-tools issue
+        run: | 
+          curl https://dl.google.com/android/repository/build-tools_r35_macosx.zip > $ANDROID_HOME/build-tools_r35_macosx.zip
+          cd $ANDROID_HOME
+          mkdir build-tools
+          unzip build-tools_r35_macosx.zip
+          mv android-15 build-tools/35.0.0
 
       - uses: krdlab/setup-haxe@master
         with:
