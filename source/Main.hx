@@ -60,6 +60,8 @@ class Main extends Sprite
 	{
 		super();
 
+		SUtil.uncaughtErrorHandler();
+
 		if (stage != null)
 		{
 			init();
@@ -95,6 +97,7 @@ class Main extends Sprite
 		}
 	
 		ClientPrefs.loadDefaultKeys();
+		SUtil.checkFiles();
 		var game = new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
 
 		// FlxG.game._customSoundTray wants just the class, it calls new from
