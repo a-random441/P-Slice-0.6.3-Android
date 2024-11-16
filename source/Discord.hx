@@ -1,3 +1,4 @@
+#if desktop
 package;
 
 import Sys.sleep;
@@ -130,3 +131,4 @@ class DiscordClient
 	}
 	#end
 }
+#end
