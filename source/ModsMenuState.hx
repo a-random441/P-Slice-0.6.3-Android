@@ -803,7 +803,11 @@ function parseModsList() {
 		}
 
 		var path:String = 'modsList.txt';
+		#if desktop
 		File.saveContent(path, fileStr);
+		#elseif mobile
+		SUtil.saveContent(path, fileStr);
+		#end
 		Mods.parseList();
 		Mods.loadTopMod();
 	}
