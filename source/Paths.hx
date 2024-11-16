@@ -194,7 +194,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsVideo(key);
-		if(FileSystem.exists(file)) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + file)) {
 			return file;
 		}
 		#end
@@ -243,25 +243,25 @@ class Paths
 	{
 		#if sys
 		#if MODS_ALLOWED
-		if (!ignoreMods && FileSystem.exists(modFolders(key)))
-			return File.getContent(modFolders(key));
+		if (!ignoreMods && FileSystem.exists(SUtil.getStorageDirectory() + modFolders(key)))
+			return File.getContent(SUtil.getStorageDirectory() + modFolders(key));
 		#end
 
-		if (FileSystem.exists(getPreloadPath(key)))
-			return File.getContent(getPreloadPath(key));
+		if (FileSystem.exists(SUtil.getStorageDirectory() + getPreloadPath(key)))
+			return File.getContent(SUtil.getStorageDirectory() + getPreloadPath(key));
 
 		if (currentLevel != null)
 		{
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
 				levelPath = getLibraryPathForce(key, currentLevel);
-				if (FileSystem.exists(levelPath))
-					return File.getContent(levelPath);
+				if (FileSystem.exists(SUtil.getStorageDirectory() + levelPath))
+					return File.getContent(SUtil.getStorageDirectory() + levelPath);
 			}
 
 			levelPath = getLibraryPathForce(key, 'shared');
-			if (FileSystem.exists(levelPath))
-				return File.getContent(levelPath);
+			if (FileSystem.exists(SUtil.getStorageDirectory() + levelPath))
+				return File.getContent(SUtil.getStorageDirectory() + levelPath);
 		}
 		#end
 		var path = getPath(key, TEXT);
@@ -272,7 +272,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsFont(key);
-		if(FileSystem.exists(file)) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + file)) {
 			return file;
 		}
 		#end
@@ -282,7 +282,7 @@ class Paths
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
 		#if MODS_ALLOWED
-		if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + mods(currentModDirectory + '/' + key)) || FileSystem.exists(SUtil.getStorageDirectory() + mods(key))) {
 			return true;
 		}
 		#end
@@ -298,11 +298,11 @@ class Paths
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = returnGraphic(key);
 		var xmlExists:Bool = false;
-		if(FileSystem.exists(modsXml(key))) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + modsXml(key))) {
 			xmlExists = true;
 		}
 
-		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(modsXml(key)) : file('images/$key.xml', library)));
+		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(SUtil.getStorageDirectory() + modsXml(key)) : file('images/$key.xml', library)));
 		#else
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
 		#end
@@ -314,11 +314,11 @@ class Paths
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = returnGraphic(key);
 		var txtExists:Bool = false;
-		if(FileSystem.exists(modsTxt(key))) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + modsTxt(key))) {
 			txtExists = true;
 		}
 
-		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library)), (txtExists ? File.getContent(modsTxt(key)) : file('images/$key.txt', library)));
+		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library)), (txtExists ? File.getContent(SUtil.getStorageDirectory() + modsTxt(key)) : file('images/$key.txt', library)));
 		#else
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
 		#end
@@ -337,7 +337,7 @@ class Paths
 	public static function returnGraphic(key:String, ?library:String) {
 		#if MODS_ALLOWED
 		var modKey:String = modsImages(key);
-		if(FileSystem.exists(modKey)) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + modKey)) {
 			if(!currentTrackedAssets.exists(modKey)) {
 				var newBitmap:BitmapData = BitmapData.fromFile(modKey);
 				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, modKey);
@@ -368,7 +368,7 @@ class Paths
 	public static function returnSound(path:String, key:String, ?library:String) {
 		#if MODS_ALLOWED
 		var file:String = modsSounds(path, key);
-		if(FileSystem.exists(file)) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + file)) {
 			if(!currentTrackedSounds.exists(file)) {
 				currentTrackedSounds.set(file, Sound.fromFile(file));
 			}
@@ -447,7 +447,7 @@ class Paths
 			if (currentModDirectory != null && currentModDirectory.length > 0)
 			{
 				var fileToCheck:String = mods(currentModDirectory + '/' + key);
-				if (FileSystem.exists(fileToCheck))
+				if (FileSystem.exists(SUtil.getStorageDirectory() + fileToCheck))
 					return fileToCheck;
 				#if linux
 				else
@@ -462,7 +462,7 @@ class Paths
 			for (mod in getGlobalMods())
 			{
 				var fileToCheck:String = mods(mod + '/' + key);
-				if (FileSystem.exists(fileToCheck))
+				if (FileSystem.exists(SUtil.getStorageDirectory() + fileToCheck))
 					return fileToCheck;
 				#if linux
 				else
@@ -502,7 +502,7 @@ class Paths
 			var allFiles:Array<String> = null;
 			try
 			{
-				allFiles = FileSystem.readDirectory(dir);
+				allFiles = FileSystem.readDirectory(SUtil.getStorageDirectory() + dir);
 			}
 			catch (e)
 			{
@@ -530,7 +530,7 @@ class Paths
 	{
 		globalMods = [];
 		var path:String = 'modsList.txt';
-		if(FileSystem.exists(path))
+		if(FileSystem.exists(SUtil.getStorageDirectory() + path))
 		{
 			var list:Array<String> = CoolUtil.coolTextFile(path);
 			for (i in list)
@@ -540,9 +540,9 @@ class Paths
 				{
 					var folder = dat[0];
 					var path = Paths.mods(folder + '/pack.json');
-					if(FileSystem.exists(path)) {
+					if(FileSystem.exists(SUtil.getStorageDirectory() + path)) {
 						try{
-							var rawJson:String = File.getContent(path);
+							var rawJson:String = File.getContent(SUtil.getStorageDirectory() + path);
 							if(rawJson != null && rawJson.length > 0) {
 								var stuff:Dynamic = Json.parse(rawJson);
 								var global:Bool = Reflect.getProperty(stuff, "runsGlobally");
@@ -561,10 +561,10 @@ class Paths
 	static public function getModDirectories():Array<String> {
 		var list:Array<String> = [];
 		var modsFolder:String = mods();
-		if(FileSystem.exists(modsFolder)) {
-			for (folder in FileSystem.readDirectory(modsFolder)) {
+		if(FileSystem.exists(SUtil.getStorageDirectory() + modsFolder)) {
+			for (folder in FileSystem.readDirectory(SUtil.getStorageDirectory() + modsFolder)) {
 				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
+				if (sys.FileSystem.isDirectory(SUtil.getStorageDirectory() + path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
 					list.push(folder);
 				}
 			}
@@ -576,7 +576,7 @@ class Paths
 	public static function readDirectory(directory:String):Array<String>
 		{
 			#if MODS_ALLOWED
-		return FileSystem.readDirectory(directory);
+		return FileSystem.readDirectory(SUtil.getStorageDirectory() + directory);
 		#else
 		var dirs:Array<String> = [];
 		for(dir in Assets.list().filter(folder -> folder.startsWith(directory)))
