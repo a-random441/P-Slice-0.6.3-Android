@@ -225,6 +225,8 @@
 	</section>
 
 	<section if="mobile">
+		<define name="ONLY_ARM64" if="arm64" />
+		<define name="ONLY_ARMV7" if="armv7" />
 		<architecture exclude="armv7" if="ONLY_ARM64" unless="UNIVERSAL"/>
 		<architecture include="arm64" if="ONLY_ARM64 || UNIVERSAL" />
 		<architecture include="armv7" if="ONLY_ARMV7 || UNIVERSAL" />
