@@ -224,6 +224,13 @@
                 </config>
 	</section>
 
+	<section if="mobile">
+		<architecture exclude="armv7" if="ONLY_ARM64" unless="UNIVERSAL"/>
+		<architecture include="arm64" if="ONLY_ARM64 || UNIVERSAL" />
+		<architecture include="armv7" if="ONLY_ARMV7 || UNIVERSAL" />
+		<architecture exclude="arm64" if="ONLY_ARMV7" unless="UNIVERSAL"/>
+	</section>
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
