@@ -217,6 +217,13 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER || mobile" />
 	<haxedef name="HXCPP_STACK_TRACE" />
 
+	<section if="android">
+		<config>
+			<!--Gradle-->
+			<android gradle-version="7.4.2" gradle-plugin="7.3.1" />
+                </config>
+	</section>
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
