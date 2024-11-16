@@ -56,8 +56,6 @@ class SUtil
 		}
 		#elseif ios
 		daPath = LimeSystem.applicationStorageDirectory;
-		#else
-	        // nothing so any os can use it without errors
 		#end
 
 		return daPath;
