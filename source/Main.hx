@@ -108,7 +108,7 @@ class Main extends Sprite
 
 		addChild(game);
 
-		#if !mobile
+		//#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -116,7 +116,7 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
-		#end
+		//#end
 
 		#if !html5
 		// TODO: disabled on HTML5 (todo: find another method that works?)
