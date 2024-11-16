@@ -210,7 +210,7 @@ class WeekData {
 		var rawJson:String = null;
 		#if MODS_ALLOWED
 		if(FileSystem.exists(SUtil.getStorageDirectory() + path)) {
-			rawJson = File.getContent(File.saveContent(SUtil.getStorageDirectory() + path);
+			rawJson = File.getContent(#if desktop File.saveContent(path) #else SUtil.saveContent(path) #end;
 		}
 		#else
 		if(OpenFlAssets.exists(path)) {
