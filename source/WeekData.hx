@@ -210,7 +210,7 @@ class WeekData {
 		var rawJson:String = null;
 		#if MODS_ALLOWED
 		if(FileSystem.exists(SUtil.getStorageDirectory() + path)) {
-			rawJson = File.getContent(path);
+			rawJson = File.getContent(File.saveContent(SUtil.getStorageDirectory() + path);
 		}
 		#else
 		if(OpenFlAssets.exists(path)) {
@@ -250,7 +250,7 @@ class WeekData {
 		#if MODS_ALLOWED
 		if (FileSystem.exists(SUtil.getStorageDirectory() + "modsList.txt"))
 		{
-			var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
+			var list:Array<String> = CoolUtil.listFromString(File.getContent(SUtil.getStorageDirectory() + "modsList.txt"));
 			var foundTheTop = false;
 			for (i in list)
 			{
