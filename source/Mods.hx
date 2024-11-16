@@ -73,8 +73,12 @@ class Mods{
                 if(fileStr.length > 0) fileStr += '\n';
                 fileStr += values[0] + '|' + (values[1] ? '1' : '0');
             }
-    
+
+	    #if desktop
             File.saveContent('modsList.txt', fileStr);
+	    #else
+            SUtil.saveContent('modsList.txt', fileStr);
+	    #end
             updatedOnState = true;
             //trace('Saved modsList.txt');
             #end
